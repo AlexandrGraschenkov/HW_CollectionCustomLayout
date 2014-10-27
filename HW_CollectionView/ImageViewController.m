@@ -7,6 +7,7 @@
 //
 
 #import "ImageViewController.h"
+#import "MyNetManager.h"
 
 @interface ImageViewController ()
 
@@ -26,7 +27,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _img.image = [UIImage imageNamed:_str];
+    [[MyNetManager sharedInstance] getAsyncImageWithURL:[NSURL URLWithString:_str] complection:^(UIImage *image) {
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            _img.image = image;
+        });
+    }];
     // Do any additional setup after loading the view.
 }
 

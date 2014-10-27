@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 #import "ImageViewController.h"
+#import "MyNetManager.h"
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSMutableArray *dataArr;
     UICollectionViewFlowLayout *flowLayout;
+    NSArray *urls;
 }
 @property (nonatomic, weak) IBOutlet UICollectionView *collection;
 @end
@@ -21,11 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    MyNetManager *mnm = [MyNetManager sharedInstance];
+    NSData *data = [mnm getImagesInfo];
+    NSDictionary  *json = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error: nil];
+    urls = [json objectForKey:@"images"];
     dataArr = [NSMutableArray new];
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < urls.count/5; i++) {
         NSMutableArray *sectionArr = [NSMutableArray new];
         for (int itemIdx = 0; itemIdx < 5; itemIdx++) {
-            NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i * 5 + itemIdx + 1];
+            NSString *imageName = urls[i*5+itemIdx];
             [sectionArr addObject:imageName];
         }
         [dataArr addObject:sectionArr];
@@ -46,10 +52,14 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%d",dataArr.count);
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
     UIImageView *imgView = (id)[cell viewWithTag:1];
-    imgView.image = [UIImage imageNamed:dataArr[indexPath.section][indexPath.item]];
+    NSURL *url = [NSURL URLWithString:dataArr[indexPath.section][indexPath.item]];
+    [[MyNetManager sharedInstance] getAsyncImageWithURL:url complection:^(UIImage *image) {
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            imgView.image = image;
+        });
+    }];
     NSLog(@"%@",dataArr[indexPath.section][indexPath.item]);
     cell.layer.zPosition = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath].zIndex;
     return cell;

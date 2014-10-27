@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C43ECB919FE68AD00076B3D /* MyNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C43ECB819FE68AD00076B3D /* MyNetManager.m */; };
 		1CF2623119F949DC0055C96A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF2623019F949DC0055C96A /* Foundation.framework */; };
 		1CF2623319F949DC0055C96A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF2623219F949DC0055C96A /* CoreGraphics.framework */; };
 		1CF2623519F949DC0055C96A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF2623419F949DC0055C96A /* UIKit.framework */; };
@@ -75,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C43ECB719FE68AD00076B3D /* MyNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyNetManager.h; path = ../MyNetManager.h; sourceTree = "<group>"; };
+		1C43ECB819FE68AD00076B3D /* MyNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyNetManager.m; path = ../MyNetManager.m; sourceTree = "<group>"; };
 		1CF2622D19F949DC0055C96A /* HW_CollectionView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HW_CollectionView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF2623019F949DC0055C96A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1CF2623219F949DC0055C96A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -202,6 +205,8 @@
 				1CF2624619F949DC0055C96A /* ViewController.m */,
 				1CF262B519F950470055C96A /* ImageViewController.h */,
 				1CF262B619F950470055C96A /* ImageViewController.m */,
+				1C43ECB719FE68AD00076B3D /* MyNetManager.h */,
+				1C43ECB819FE68AD00076B3D /* MyNetManager.m */,
 				1CF2624819F949DC0055C96A /* Images.xcassets */,
 				1CF2623719F949DC0055C96A /* Supporting Files */,
 			);
@@ -418,6 +423,7 @@
 				1CF2624119F949DC0055C96A /* AppDelegate.m in Sources */,
 				1CF262B719F950470055C96A /* ImageViewController.m in Sources */,
 				1CF2623D19F949DC0055C96A /* main.m in Sources */,
+				1C43ECB919FE68AD00076B3D /* MyNetManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
