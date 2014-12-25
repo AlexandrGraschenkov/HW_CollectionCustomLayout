@@ -40,10 +40,18 @@
 
 - (void)getAsyncImageWithURL:(NSURL*)url complection:(void(^)(UIImage* image))complection
 {
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue: _queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         complection([UIImage imageWithData:data]);
     }];
+}
+
+- (UIImage *)getSyncImageWithURL:(NSURL*)url
+{
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    UIImage *image = [UIImage imageWithData:data];
+    return image;
 }
 
 @end

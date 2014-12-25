@@ -16,4 +16,6 @@
 
 - (void)getAsyncImageWithURL:(NSURL*)url complection:(void(^)(UIImage* image))complection;
 
+- (UIImage *)getSyncImageWithURL:(NSURL*)url;
+
 @end

@@ -15,6 +15,8 @@
     NSMutableArray *dataArr;
     UICollectionViewFlowLayout *flowLayout;
     NSArray *urls;
+    NSMutableArray *imgArr;
+    UIImage *img;
 }
 @property (nonatomic, weak) IBOutlet UICollectionView *collection;
 @end
@@ -28,12 +30,17 @@
     NSDictionary  *json = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error: nil];
     urls = [json objectForKey:@"images"];
     dataArr = [NSMutableArray new];
+    imgArr = [NSMutableArray new];
+    img = [UIImage new];
     for (int i = 0; i < urls.count/5; i++) {
         NSMutableArray *sectionArr = [NSMutableArray new];
+        NSMutableArray *sectionArrImg = [NSMutableArray new];
         for (int itemIdx = 0; itemIdx < 5; itemIdx++) {
             NSString *imageName = urls[i*5+itemIdx];
             [sectionArr addObject:imageName];
+            [sectionArrImg addObject:img];
         }
+        [imgArr addObject:sectionArrImg];
         [dataArr addObject:sectionArr];
     }
     flowLayout = (id)self.collection.collectionViewLayout;
@@ -55,12 +62,16 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCell" forIndexPath:indexPath];
     UIImageView *imgView = (id)[cell viewWithTag:1];
     NSURL *url = [NSURL URLWithString:dataArr[indexPath.section][indexPath.item]];
-    [[MyNetManager sharedInstance] getAsyncImageWithURL:url complection:^(UIImage *image) {
+    if(imgArr[indexPath.section][indexPath.item] == img) {
+        [[MyNetManager sharedInstance] getAsyncImageWithURL:url complection:^(UIImage *image) {
         dispatch_async(dispatch_get_main_queue(), ^(){
             imgView.image = image;
+            imgArr[indexPath.section][indexPath.item] = image;
         });
-    }];
-    NSLog(@"%@",dataArr[indexPath.section][indexPath.item]);
+        }];
+    } else {
+        imgView.image = imgArr[indexPath.section][indexPath.item];
+    }
     cell.layer.zPosition = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath].zIndex;
     return cell;
 }
